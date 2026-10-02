@@ -19,8 +19,7 @@
   body {
     margin: 0;
     font-family: 'Trebuchet MS', 'Segoe UI', Verdana, sans-serif;
-    /* IMAGEM ADICIONADA AO PLANO DE FUNDO GERAL */
-    background: url('background-educacional.webp') no-repeat center center fixed;
+    background: url('image_483032.jpg') no-repeat center center fixed;
     background-size: cover;
     color: var(--text-color);
     min-height: 100vh;
@@ -56,11 +55,10 @@
     font-size: 16px;
   }
 
-  /* CAPA DO APP (HERO BANNER - SEGUNDO QUADRANTE) */
   .app-cover {
     width: 100%;
     height: 220px;
-    background: url('background-educacional.webp') no-repeat center center;
+    background: url('image_483032.jpg') no-repeat center center;
     background-size: cover;
     border-radius: 12px;
     border: 2px solid var(--gold);
@@ -97,7 +95,6 @@
     text-shadow: 1px 1px 3px #000;
   }
 
-  /* ESTILOS DA TELA PRINCIPAL (ÍCONES) */
   .area-section {
     margin-bottom: 40px;
     background: rgba(10, 20, 40, 0.75);
@@ -157,7 +154,6 @@
     text-transform: uppercase;
   }
 
-  /* ESTILOS DA PÁGINA DA DISCIPLINA (INTERNA) */
   #tela-disciplina {
     display: none;
     background: rgba(10, 20, 40, 0.85);
@@ -216,7 +212,6 @@
     border: 1px solid var(--blue);
   }
 
-  /* GRID DE JOGOS COM CAPAS */
   .grid-jogos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -231,6 +226,7 @@
     position: relative;
     text-align: center;
     transition: transform 0.2s;
+    cursor: pointer;
   }
 
   .card-jogo:hover {
@@ -252,18 +248,9 @@
 
   .info-jogo {
     padding: 10px;
-  }
-
-  .info-jogo a {
     color: var(--gold);
-    text-decoration: none;
     font-size: 14px;
     font-weight: bold;
-    display: block;
-  }
-
-  .info-jogo a:hover {
-    text-decoration: underline;
   }
 
   .checkbox-deletar {
@@ -276,13 +263,12 @@
     box-shadow: 0 0 5px rgba(0,0,0,0.8);
   }
 
-  /* MODAIS (LIXEIRA E ADICIONAR JOGO) */
   .modal-overlay {
     display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.8);
-    z-index: 100;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
     justify-content: center;
     align-items: center;
   }
@@ -298,13 +284,20 @@
     overflow-y: auto;
   }
 
-  .modal-content.lixeira {
-    border-color: var(--red);
+  .modal-jogar-content {
+    background: #fff;
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
-  .form-group {
-    margin-bottom: 15px;
-  }
+  .modal-content.lixeira { border-color: var(--red); }
+
+  .form-group { margin-bottom: 15px; }
 
   .form-group label {
     display: block;
@@ -329,58 +322,6 @@
     border: none;
     padding: 5px 0;
   }
-
-
-  /* VISUALIZADOR INTERNO DE JOGOS — aparece somente quando um jogo é aberto */
-  #modalJogo { z-index: 200; }
-  #modalJogo .modal-jogo-shell {
-    width: 96vw;
-    height: 94vh;
-    max-width: 1600px;
-    background: #06172f;
-    border: 3px solid var(--gold);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.65);
-    display: flex;
-    flex-direction: column;
-  }
-  #modalJogo .barra-jogo {
-    min-height: 52px;
-    background: rgba(13,36,68,0.98);
-    border-bottom: 1px solid var(--blue);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 8px 12px;
-    box-sizing: border-box;
-  }
-  #modalJogo .barra-jogo strong {
-    color: var(--gold);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  #modalJogo .area-iframe-jogo { flex: 1; min-height: 0; background: #000; }
-  #modalJogo iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-    background: white;
-  }
-  #modalJogo .btn-fechar-jogo {
-    background: var(--red);
-    color: #fff;
-    border: 2px solid #fff;
-    border-radius: 7px;
-    padding: 8px 14px;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-
 </style>
 </head>
 <body>
@@ -392,10 +333,10 @@
   </div>
 </header>
 
-<!-- TELA 1: LISTAGEM DE ÁREAS E ÍCONES -->
+<!-- TELA 1: LISTAGEM DE ÁREAS -->
 <main id="tela-principal"></main>
 
-<!-- TELA 2: PÁGINA INTERNA DA DISCIPLINA -->
+<!-- TELA 2: DISCIPLINA -->
 <main id="tela-disciplina">
   <div class="cabecalho-disciplina">
     <button class="btn-voltar" onclick="voltarTelaPrincipal()">⬅ VOLTAR</button>
@@ -437,8 +378,8 @@
       </div>
 
       <div class="form-group" id="grupoArquivoHtml">
-        <label for="arquivoHtmlJogo">SELECIONE O ARQUIVO DO JOGO (.html, .zip):</label>
-        <input type="file" id="arquivoHtmlJogo" accept=".html,.htm,.zip">
+        <label for="arquivoHtmlJogo">SELECIONE O ARQUIVO DO JOGO (.html):</label>
+        <input type="file" id="arquivoHtmlJogo" accept=".html,.htm">
       </div>
 
       <div class="form-group" id="grupoLinkWeb" style="display: none;">
@@ -449,10 +390,9 @@
       <div class="form-group">
         <label for="capaJogo">IMAGEM DE CAPA DO JOGO (.jpg, .png) - Opcional:</label>
         <input type="file" id="capaJogo" accept="image/*">
-        <small style="color: #ccc; display: block; margin-top: 5px;">Se deixado em branco para o ENEM, a arte "0.png" será usada como padrão.</small>
       </div>
 
-      <button type="submit" class="btn btn-add" style="width: 100%; justify-content: center; font-size: 16px; margin-top: 10px;">💾 SALVAR JOGO</button>
+      <button type="submit" id="btnSalvarJogo" class="btn btn-add" style="width: 100%; justify-content: center; font-size: 16px; margin-top: 10px;">💾 SALVAR JOGO NO FIREBASE</button>
     </form>
   </div>
 </div>
@@ -464,371 +404,52 @@
       <h2 style="color: var(--red); margin: 0;">LIXEIRA</h2>
       <button onclick="fecharLixeira()" style="background: transparent; color: white; border: 1px solid white; cursor: pointer; border-radius: 4px;">FECHAR [X]</button>
     </div>
-    <p style="color: #ff9aa2; font-size: 14px; text-align: center;">JOGOS EXCLUÍDOS FICARÃO AQUI POR 30 DIAS.</p>
+    <p style="color: #ff9aa2; font-size: 14px; text-align: center;">JOGOS EXCLUÍDOS DO FIREBASE</p>
     <div id="container-lixeira"></div>
   </div>
 </div>
 
-<!-- MODAL: EXECUÇÃO INTERNA DO JOGO (não abre nova aba) -->
-<div id="modalJogo" class="modal-overlay">
-  <div class="modal-jogo-shell">
-    <div class="barra-jogo">
-      <strong id="tituloJogoEmExecucao">JOGO</strong>
-      <button class="btn-fechar-jogo" onclick="fecharJogoInterno()">FECHAR [X]</button>
+<!-- MODAL: JOGAR NA PLATAFORMA -->
+<div id="modalJogar" class="modal-overlay">
+  <div class="modal-jogar-content">
+    <div style="background: var(--bg-color); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold);">
+      <h2 id="tituloModalJogar" style="color: var(--gold); margin: 0; font-size: 18px;">JOGANDO</h2>
+      <button onclick="fecharJogo()" class="btn-lixeira">FECHAR JOGO [X]</button>
     </div>
-    <div class="area-iframe-jogo">
-      <iframe id="iframeJogo" title="Jogo educacional"></iframe>
-    </div>
+    <iframe id="iframeJogo" style="width: 100%; flex-grow: 1; border: none; background: #fff;"></iframe>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script type="module">
-/* ================================================================
-   CLASSROOM GAMIFICATION — persistência Firebase + espelho GitHub
-   A interface original é mantida; somente o comportamento de
-   armazenamento/execução foi corrigido.
-   ================================================================ */
+<!-- SDKs do Firebase (Versão 8 Compatível) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<!-- Seu arquivo de conexão com o banco de dados -->
+<script src="firebase-config.js"></script>
 
-import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-functions.js";
-
-/* ===================== FIREBASE =====================
-   Preencha com as credenciais do SEU projeto Firebase.
-   Elas são públicas no frontend por design; a segurança fica
-   nas regras do Firestore/Storage e na autenticação.
-*/
-const firebaseConfig = {
-  apiKey: "COLOQUE_SUA_API_KEY",
-  authDomain: "SEU-PROJETO.firebaseapp.com",
-  projectId: "SEU-PROJETO",
-  storageBucket: "SEU-PROJETO.appspot.com",
-  messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-  appId: "SEU_APP_ID"
-};
-
-const FIREBASE_ATIVO = !Object.values(firebaseConfig).some(v => String(v).startsWith("COLOQUE_") || String(v).includes("SEU-PROJETO"));
-let firebaseApp = null;
-let auth = null;
-let db = null;
-let storage = null;
-let functions = null;
-let usuarioAnonimo = null;
-let firebasePronto = false;
-let urlsTemporariasDoJogo = [];
-
-const chaveLocalStorage = "classroom_gamification_games_v2";
-
-// BASE DE DADOS
-let disciplinas = [
-  { id: 999, area: "EXAME NACIONAL DO ENSINO MÉDIO", nome: "JOGOS ENEM", icone: "📝", cor: "var(--gold)", jogos: [] },
-  { id: 1, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "LÍNGUA PORTUGUESA", icone: "💬", cor: "var(--pink-icon)", jogos: [
-      { id: 101, nome: "SUPER FL WORLD V3", url: "superflworldv3.html", capa: "", excluido: false }
-  ]},
-  { id: 2, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "ARTE", icone: "🎨", cor: "var(--pink-icon)", jogos: [] },
-  { id: 3, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "EDUCAÇÃO FÍSICA", icone: "🏃", cor: "var(--pink-icon)", jogos: [] },
-  { id: 4, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "LÍNGUA INGLESA", icone: "🌐", cor: "var(--pink-icon)", jogos: [] },
-  { id: 5, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "LÍNGUA ESPANHOLA", icone: "🌎", cor: "var(--pink-icon)", jogos: [] },
-  { id: 6, area: "MATEMÁTICA E SUAS TECNOLOGIAS", nome: "MATEMÁTICA", icone: "📐", cor: "var(--blue)", jogos: [] },
-  { id: 7, area: "CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS", nome: "BIOLOGIA", icone: "🌿", cor: "var(--orange-icon)", jogos: [] },
-  { id: 8, area: "CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS", nome: "FÍSICA", icone: "⚛️", cor: "var(--orange-icon)", jogos: [] },
-  { id: 9, area: "CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS", nome: "QUÍMICA", icone: "🧪", cor: "var(--orange-icon)", jogos: [] },
-  { id: 10, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "HISTÓRIA", icone: "📜", cor: "var(--orange-icon)", jogos: [] },
-  { id: 11, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "GEOGRAFIA", icone: "🌍", cor: "var(--orange-icon)", jogos: [] },
-  { id: 12, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "FILOSOFIA", icone: "🏛️", cor: "var(--orange-icon)", jogos: [] },
-  { id: 13, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "SOCIOLOGIA", icone: "👥", cor: "var(--orange-icon)", jogos: [] }
+<script>
+// BASE DE DADOS LOCAL APENAS PARA ESTRUTURA DAS DISCIPLINAS
+const disciplinas = [
+  { id: 999, area: "EXAME NACIONAL DO ENSINO MÉDIO", nome: "JOGOS ENEM", icone: "📝", cor: "var(--gold)" },
+  { id: 1, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "LÍNGUA PORTUGUESA", icone: "💬", cor: "var(--pink-icon)" },
+  { id: 2, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "ARTE", icone: "🎨", cor: "var(--pink-icon)" },
+  { id: 3, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "EDUCAÇÃO FÍSICA", icone: "🏃", cor: "var(--pink-icon)" },
+  { id: 4, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "LÍNGUA INGLESA", icone: "🌐", cor: "var(--pink-icon)" },
+  { id: 5, area: "LINGUAGENS E SUAS TECNOLOGIAS", nome: "LÍNGUA ESPANHOLA", icone: "🌎", cor: "var(--pink-icon)" },
+  { id: 6, area: "MATEMÁTICA E SUAS TECNOLOGIAS", nome: "MATEMÁTICA", icone: "📐", cor: "var(--blue)" },
+  { id: 7, area: "CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS", nome: "BIOLOGIA", icone: "🌿", cor: "var(--orange-icon)" },
+  { id: 8, area: "CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS", nome: "FÍSICA", icone: "⚛️", cor: "var(--orange-icon)" },
+  { id: 9, area: "CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS", nome: "QUÍMICA", icone: "🧪", cor: "var(--orange-icon)" },
+  { id: 10, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "HISTÓRIA", icone: "📜", cor: "var(--orange-icon)" },
+  { id: 11, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "GEOGRAFIA", icone: "🌍", cor: "var(--orange-icon)" },
+  { id: 12, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "FILOSOFIA", icone: "🏛️", cor: "var(--orange-icon)" },
+  { id: 13, area: "CIÊNCIAS HUMANAS E SOCIAIS APLICADAS", nome: "SOCIOLOGIA", icone: "👥", cor: "var(--orange-icon)" }
 ];
 
 let disciplinaAtualId = null;
-
 let modoDeletarAtivo = false;
+let jogosCarregados = []; // Array temporário para manter os jogos na tela
 
-/* ===================== AUXILIARES ===================== */
-function chaveJogo(jogo) { return String(jogo.id); }
-function jogoParaBanco(disciplina, jogo) {
-  return {
-    id: jogo.id,
-    disciplineId: disciplina.id,
-    disciplineName: disciplina.nome,
-    name: jogo.nome,
-    url: jogo.url || "",
-    capa: jogo.capa || "",
-    storagePath: jogo.storagePath || "",
-    fileType: jogo.fileType || "",
-    originalFileName: jogo.originalFileName || "",
-    excluido: !!jogo.excluido,
-    createdAt: jogo.createdAt || Date.now(),
-    updatedAt: Date.now()
-  };
-}
-
-function salvarCatalogoLocal() {
-  try {
-    // Mantém a compatibilidade offline para links e jogos que ainda estão no navegador.
-    localStorage.setItem(chaveLocalStorage, JSON.stringify(disciplinas.map(d => ({
-      ...d,
-      jogos: d.jogos.map(j => ({...j}))
-    }))));
-  } catch (e) { console.warn("Não foi possível salvar catálogo local:", e); }
-}
-
-function carregarCatalogoLocal() {
-  try {
-    const salvo = localStorage.getItem(chaveLocalStorage);
-    if (!salvo) return;
-    const dados = JSON.parse(salvo);
-    dados.forEach(ds => {
-      const d = disciplinas.find(x => x.id === ds.id);
-      if (!d) return;
-      (ds.jogos || []).forEach(j => {
-        const existente = d.jogos.find(x => x.id === j.id);
-        if (existente) Object.assign(existente, j);
-        else d.jogos.push(j);
-      });
-    });
-  } catch (e) { console.warn("Catálogo local inválido:", e); }
-}
-
-function normalizarCaminho(caminho) {
-  const partes = String(caminho).replace(/\\/g, "/").split("/");
-  const saida = [];
-  for (const p of partes) {
-    if (!p || p === ".") continue;
-    if (p === "..") { if (saida.length) saida.pop(); }
-    else saida.push(p);
-  }
-  return saida.join("/");
-}
-
-function diretorioDe(caminho) {
-  const i = caminho.lastIndexOf("/");
-  return i < 0 ? "" : caminho.slice(0, i);
-}
-
-function resolverArquivo(referencia, base) {
-  let r = String(referencia || "").trim();
-  if (!r || r.startsWith("#") || /^[a-z][a-z0-9+.-]*:/i.test(r) || r.startsWith("//")) return null;
-  r = r.split("#")[0].split("?")[0];
-  return normalizarCaminho(base ? `${base}/${r}` : r);
-}
-
-function isImagem(nome) { return /\.(png|jpe?g|gif|svg|webp|bmp|ico|avif)$/i.test(nome); }
-function isCss(nome) { return /\.css$/i.test(nome); }
-function isJs(nome) { return /\.(js|mjs)$/i.test(nome); }
-
-async function blobParaDataURL(blob) {
-  return await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  });
-}
-
-/* ===================== FIREBASE ===================== */
-async function iniciarFirebase() {
-  carregarCatalogoLocal();
-  if (!FIREBASE_ATIVO) {
-    console.warn("Firebase ainda não configurado. O sistema usará o armazenamento local até que firebaseConfig seja preenchido.");
-    return;
-  }
-  try {
-    firebaseApp = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-    auth = getAuth(firebaseApp);
-    db = getFirestore(firebaseApp);
-    storage = getStorage(firebaseApp);
-    functions = getFunctions(firebaseApp);
-    const cred = await signInAnonymously(auth);
-    usuarioAnonimo = cred.user;
-    firebasePronto = true;
-    await carregarJogosFirebase();
-  } catch (erro) {
-    firebasePronto = false;
-    console.error("Falha ao inicializar Firebase:", erro);
-  }
-}
-
-async function carregarJogosFirebase() {
-  if (!firebasePronto) return;
-  const snap = await getDocs(collection(db, "games"));
-  snap.forEach(item => {
-    const j = item.data();
-    const d = disciplinas.find(x => x.id === Number(j.disciplineId));
-    if (!d) return;
-    const objeto = {
-      id: Number(j.id),
-      nome: j.name || "JOGO",
-      url: j.url || "",
-      capa: j.capa || "",
-      storagePath: j.storagePath || "",
-      fileType: j.fileType || "",
-      originalFileName: j.originalFileName || "",
-      excluido: !!j.excluido,
-      createdAt: j.createdAt || Date.now(),
-      updatedAt: j.updatedAt || Date.now()
-    };
-    const existente = d.jogos.find(x => x.id === objeto.id);
-    if (existente) Object.assign(existente, objeto);
-    else d.jogos.push(objeto);
-  });
-  renderizarTelaPrincipal();
-}
-
-async function persistirJogoFirebase(disciplina, jogo) {
-  if (!firebasePronto) {
-    salvarCatalogoLocal();
-    return;
-  }
-  await setDoc(doc(db, "games", chaveJogo(jogo)), jogoParaBanco(disciplina, jogo), { merge: true });
-  salvarCatalogoLocal();
-  await sincronizarGitHub("upsert", disciplina, jogo);
-}
-
-async function removerJogoFirebase(disciplina, jogo) {
-  if (!firebasePronto) { salvarCatalogoLocal(); return; }
-  await setDoc(doc(db, "games", chaveJogo(jogo)), jogoParaBanco(disciplina, jogo), { merge: true });
-  salvarCatalogoLocal();
-  await sincronizarGitHub("delete", disciplina, jogo);
-}
-
-async function reativarJogoFirebase(disciplina, jogo) {
-  if (!firebasePronto) { salvarCatalogoLocal(); return; }
-  await setDoc(doc(db, "games", chaveJogo(jogo)), jogoParaBanco(disciplina, jogo), { merge: true });
-  salvarCatalogoLocal();
-  await sincronizarGitHub("restore", disciplina, jogo);
-}
-
-function catalogoParaGitHub() {
-  return disciplinas.flatMap(d => d.jogos.map(j => jogoParaBanco(d, j)));
-}
-
-async function sincronizarGitHub(acao, disciplina, jogo) {
-  if (!firebasePronto || !functions) return;
-  try {
-    const callable = httpsCallable(functions, "syncGithubCatalog");
-    await callable({ action: acao, games: catalogoParaGitHub() });
-  } catch (erro) {
-    // O jogo continua salvo no Firebase mesmo se o espelho GitHub estiver indisponível.
-    console.warn("Espelho GitHub não atualizado:", erro);
-  }
-}
-
-/* ===================== EXECUÇÃO INTERNA ===================== */
-function fecharJogoInterno() {
-  const modal = document.getElementById("modalJogo");
-  const iframe = document.getElementById("iframeJogo");
-  iframe.src = "about:blank";
-  modal.style.display = "none";
-  urlsTemporariasDoJogo.forEach(u => { try { URL.revokeObjectURL(u); } catch (_) {} });
-  urlsTemporariasDoJogo = [];
-}
-
-async function abrirJogoInterno(jogoId) {
-  const disciplina = disciplinas.find(d => d.id === disciplinaAtualId);
-  if (!disciplina) return;
-  const jogo = disciplina.jogos.find(j => j.id === jogoId);
-  if (!jogo) return;
-
-  const modal = document.getElementById("modalJogo");
-  const iframe = document.getElementById("iframeJogo");
-  document.getElementById("tituloJogoEmExecucao").textContent = jogo.nome;
-  iframe.src = "about:blank";
-  modal.style.display = "flex";
-
-  try {
-    if (jogo.fileType === "zip" || /\.zip$/i.test(jogo.originalFileName || jogo.url || "")) {
-      await abrirZipInterno(jogo, iframe);
-    } else {
-      iframe.src = jogo.url;
-    }
-  } catch (erro) {
-    console.error(erro);
-    iframe.srcdoc = `<div style="font-family:Arial;padding:30px"><h2>Não foi possível abrir o jogo</h2><p>${String(erro.message || erro)}</p></div>`;
-  }
-}
-
-async function abrirZipInterno(jogo, iframe) {
-  if (!window.JSZip) throw new Error("Biblioteca de ZIP não carregada. Atualize a página e tente novamente.");
-  let fonte = jogo.url;
-  if (jogo.storagePath && firebasePronto) {
-    fonte = await getDownloadURL(ref(storage, jogo.storagePath));
-  }
-  const resposta = await fetch(fonte);
-  if (!resposta.ok) throw new Error("Não foi possível baixar o arquivo ZIP salvo.");
-  const buffer = await resposta.arrayBuffer();
-  const zip = await window.JSZip.loadAsync(buffer);
-  const arquivos = {};
-  Object.keys(zip.files).forEach(nome => {
-    if (!zip.files[nome].dir) arquivos[normalizarCaminho(nome)] = zip.files[nome];
-  });
-  const nomes = Object.keys(arquivos);
-  const entrada = nomes.find(n => /(^|\/)index\.html?$/i.test(n)) || nomes.find(n => /\.html?$/i.test(n));
-  if (!entrada) throw new Error("O ZIP não possui um arquivo HTML para iniciar o jogo.");
-
-  // Cria URLs temporárias para todos os recursos; CSS e JS locais são incorporados no HTML.
-  const recursoURL = {};
-  for (const nome of nomes) {
-    const ext = nome.split(".").pop().toLowerCase();
-    const blob = await arquivos[nome].async("blob");
-    const url = URL.createObjectURL(blob);
-    recursoURL[nome] = url;
-    urlsTemporariasDoJogo.push(url);
-  }
-
-  let html = await arquivos[entrada].async("string");
-  const base = diretorioDe(entrada);
-
-  // Inline de CSS e JS locais.
-  const parser = new DOMParser();
-  const docHtml = parser.parseFromString(html, "text/html");
-  const links = [...docHtml.querySelectorAll("link[href]")];
-  for (const link of links) {
-    const caminho = resolverArquivo(link.getAttribute("href"), base);
-    if (caminho && arquivos[caminho] && isCss(caminho)) {
-      let css = await arquivos[caminho].async("string");
-      const baseCss = diretorioDe(caminho);
-      css = css.replace(/url\(([^)]+)\)/gi, (m, raw) => {
-        const alvo = String(raw).trim().replace(/^['\"]|['\"]$/g, "");
-        const c = resolverArquivo(alvo, baseCss);
-        return c && recursoURL[c] ? `url("${recursoURL[c]}")` : m;
-      });
-      const style = docHtml.createElement("style");
-      style.textContent = css;
-      link.replaceWith(style);
-    }
-  }
-
-  const scripts = [...docHtml.querySelectorAll("script[src]")];
-  for (const script of scripts) {
-    const caminho = resolverArquivo(script.getAttribute("src"), base);
-    if (caminho && arquivos[caminho] && isJs(caminho)) {
-      const codigo = await arquivos[caminho].async("string");
-      const novo = docHtml.createElement("script");
-      for (const attr of ["type", "defer", "async"]) if (script.hasAttribute(attr)) novo.setAttribute(attr, script.getAttribute(attr) || "");
-      novo.textContent = codigo;
-      script.replaceWith(novo);
-    }
-  }
-
-  // Substitui referências locais de imagens, áudio, vídeo, fontes e outros arquivos.
-  const atributos = ["src", "poster", "data", "href"];
-  for (const el of docHtml.querySelectorAll("*[src], *[poster], object[data], link[href], source[src]")) {
-    for (const attr of atributos) {
-      if (!el.hasAttribute(attr)) continue;
-      const valor = el.getAttribute(attr);
-      const caminho = resolverArquivo(valor, base);
-      if (caminho && recursoURL[caminho] && !isCss(caminho) && !isJs(caminho)) el.setAttribute(attr, recursoURL[caminho]);
-    }
-  }
-
-  html = "<!doctype html>" + docHtml.documentElement.outerHTML;
-  iframe.srcdoc = html;
-}
-
-/* ===================== TELA PRINCIPAL ===================== */
+// 1. INICIALIZA A TELA PRINCIPAL
 function renderizarTelaPrincipal() {
   const container = document.getElementById('tela-principal');
   let htmlContent = `
@@ -839,6 +460,7 @@ function renderizarTelaPrincipal() {
       </div>
     </div>
   `;
+
   const areas = [...new Set(disciplinas.map(d => d.area))];
   areas.forEach(area => {
     const disciplinasArea = disciplinas.filter(d => d.area === area);
@@ -858,84 +480,138 @@ function renderizarTelaPrincipal() {
       `;
     }
   });
+
   container.innerHTML = htmlContent;
-  renderizarLixeira();
 }
 
+// 2. ABRIR DISCIPLINA E BUSCAR NO FIREBASE
 function abrirDisciplina(id) {
   const disciplina = disciplinas.find(d => d.id === id);
   if(!disciplina) return;
   disciplinaAtualId = id;
   modoDeletarAtivo = false;
   document.getElementById('btn-deletar-jogo').classList.remove('btn-ativo');
+  
   document.getElementById('titulo-disciplina-atual').innerText = disciplina.nome;
   const iconeElement = document.getElementById('icone-disciplina-atual');
   iconeElement.innerText = disciplina.icone;
   iconeElement.style.backgroundColor = disciplina.cor;
-  renderizarJogos();
+
+  // Busca os jogos do Firebase
+  buscarJogosDoFirestore(id);
+
   document.getElementById('tela-principal').style.display = 'none';
   document.getElementById('tela-disciplina').style.display = 'block';
 }
 
 function voltarTelaPrincipal() {
-  fecharJogoInterno();
   disciplinaAtualId = null;
   document.getElementById('tela-disciplina').style.display = 'none';
   document.getElementById('tela-principal').style.display = 'block';
 }
 
+// 3. BUSCAR JOGOS DO FIREBASE FIRESTORE
+function buscarJogosDoFirestore(disciplinaId) {
+  const containerJogos = document.getElementById('lista-jogos-container');
+  containerJogos.innerHTML = '<p style="color: var(--gold);">Buscando jogos no Firebase...</p>';
+  containerJogos.style.display = "block";
+
+  // Busca na coleção 'jogos' onde a disciplina seja igual a selecionada
+  db.collection("jogos")
+    .where("disciplinaId", "==", disciplinaId)
+    .get()
+    .then((querySnapshot) => {
+      jogosCarregados = [];
+      querySnapshot.forEach((doc) => {
+        let dadosJogo = doc.data();
+        dadosJogo.id = doc.id; // Guarda o ID único do Firebase
+        jogosCarregados.push(dadosJogo);
+      });
+      renderizarJogos();
+    })
+    .catch((error) => {
+      console.error("Erro ao buscar jogos: ", error);
+      containerJogos.innerHTML = '<p style="color: var(--red);">Erro ao carregar jogos. Verifique a conexão.</p>';
+    });
+}
+
 function renderizarJogos() {
   const containerJogos = document.getElementById('lista-jogos-container');
   containerJogos.innerHTML = '';
-  const disciplina = disciplinas.find(d => d.id === disciplinaAtualId);
-  const jogosAtivos = disciplina.jogos.filter(j => !j.excluido);
+  
+  const jogosAtivos = jogosCarregados.filter(j => !j.excluido);
+
   if (jogosAtivos.length === 0) {
     containerJogos.style.display = "block";
     containerJogos.innerHTML = '<p style="color: gray;">NENHUM JOGO CADASTRADO NESSA DISCIPLINA.</p>';
     return;
   }
+
   containerJogos.style.display = "grid";
+
   jogosAtivos.forEach(jogo => {
     const card = document.createElement('div');
     card.className = 'card-jogo';
+    // Se não estivermos a deletar, clicar no card abre o jogo
+    if(!modoDeletarAtivo) {
+        card.onclick = () => iniciarJogo(jogo.dados);
+    }
+
     let checkbox = '';
-    if (modoDeletarAtivo) checkbox = `<input type="checkbox" class="checkbox-deletar" onchange="confirmarDelecaoJogo(event, ${jogo.id})">`;
+    if (modoDeletarAtivo) {
+      checkbox = `<input type="checkbox" class="checkbox-deletar" onchange="confirmarDelecaoJogo(event, '${jogo.id}')">`;
+    }
+
     let estiloCapa = jogo.capa ? `background-image: url('${jogo.capa}');` : ``;
     let conteudoCapa = jogo.capa ? `` : `🎮`;
+
     card.innerHTML = `
       ${checkbox}
-      <a href="#" onclick="abrirJogoInterno(${jogo.id}); return false;" style="text-decoration:none;color:inherit;display:block;">
-        <div class="capa-jogo" style="${estiloCapa}">${conteudoCapa}</div>
-      </a>
-      <div class="info-jogo"><a href="#" onclick="abrirJogoInterno(${jogo.id}); return false;">${jogo.nome}</a></div>
+      <div class="capa-jogo" style="${estiloCapa}">${conteudoCapa}</div>
+      <div class="info-jogo">${jogo.nome}</div>
     `;
     containerJogos.appendChild(card);
   });
 }
 
+// 4. FUNÇÕES DE DELETAR (ATUALIZA O FIREBASE)
 function alternarModoDeletar() {
   modoDeletarAtivo = !modoDeletarAtivo;
   const btn = document.getElementById('btn-deletar-jogo');
-  if (modoDeletarAtivo) btn.classList.add('btn-ativo'); else btn.classList.remove('btn-ativo');
+  if (modoDeletarAtivo) { btn.classList.add('btn-ativo'); } else { btn.classList.remove('btn-ativo'); }
   renderizarJogos();
 }
 
-async function confirmarDelecaoJogo(event, jogoId) {
-  if (!event.target.checked) return;
-  if (!confirm("Você deseja realmente deletar esse jogo?")) { event.target.checked = false; return; }
-  const disciplina = disciplinas.find(d => d.id === disciplinaAtualId);
-  const jogo = disciplina.jogos.find(j => j.id === jogoId);
-  jogo.excluido = true;
-  try { await removerJogoFirebase(disciplina, jogo); } catch(e) { console.error(e); }
-  renderizarJogos();
-  renderizarLixeira();
+function confirmarDelecaoJogo(event, firebaseId) {
+  if (event.target.checked) {
+    if (confirm("Você deseja realmente enviar esse jogo para a lixeira?")) {
+      db.collection("jogos").doc(firebaseId).update({
+        excluido: true
+      }).then(() => {
+        buscarJogosDoFirestore(disciplinaAtualId); // Recarrega a tela
+      }).catch(error => console.error("Erro ao deletar:", error));
+    } else {
+      event.target.checked = false;
+    }
+  }
 }
 
-/* ===================== ADIÇÃO DE JOGOS ===================== */
+// 5. JOGAR DENTRO DA PLATAFORMA (IFRAME)
+function iniciarJogo(dadosDoJogo) {
+  document.getElementById('modalJogar').style.display = 'flex';
+  // O iframe lê diretamente a string Base64 salva ou o link web!
+  document.getElementById('iframeJogo').src = dadosDoJogo; 
+}
+
+function fecharJogo() {
+  document.getElementById('modalJogar').style.display = 'none';
+  document.getElementById('iframeJogo').src = ""; // Limpa a memória
+}
+
+// 6. ADICIONAR JOGOS COM CONVERSÃO BASE64 PARA O FIREBASE
 function abrirModalAdicionarJogo() {
   document.getElementById('modalAdicionarJogo').style.display = 'flex';
   document.getElementById('formAdicionarJogo').reset();
-  document.getElementById('tituloModalAdicionar').innerText = "ADICIONAR NOVO JOGO";
   alternarTipoEntradaJogo();
 }
 function fecharModalAdicionarJogo() { document.getElementById('modalAdicionarJogo').style.display = 'none'; }
@@ -954,121 +630,103 @@ function alternarTipoEntradaJogo() {
   }
 }
 
-async function fazerUploadFirebase(arquivo, pasta) {
-  const nomeSeguro = String(arquivo.name).replace(/[^a-zA-Z0-9._-]/g, "_");
-  const caminho = `${pasta}/${Date.now()}-${nomeSeguro}`;
-  const referencia = ref(storage, caminho);
-  await uploadBytes(referencia, arquivo, { contentType: arquivo.type || undefined });
-  const url = await getDownloadURL(referencia);
-  return { caminho, url };
+// Converte arquivo para texto Base64
+function arquivoParaBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file); // Converte para formato Data URL
+  });
 }
 
 async function salvarNovoJogo(event) {
   event.preventDefault();
-  const nome = document.getElementById('nomeJogo').value.toUpperCase().trim();
-  const tipo = document.getElementById('tipoJogo').value;
-  const disciplina = disciplinas.find(d => d.id === disciplinaAtualId);
-  if (!disciplina) return;
-  const novoId = Date.now();
-  const novoJogo = { id: novoId, nome, url: "#", capa: "", excluido: false, createdAt: novoId, updatedAt: novoId, fileType: "" };
+  const btnSalvar = document.getElementById('btnSalvarJogo');
+  btnSalvar.innerText = "⏳ SALVANDO NO FIREBASE...";
+  btnSalvar.disabled = true;
 
+  const nome = document.getElementById('nomeJogo').value.toUpperCase();
+  const tipo = document.getElementById('tipoJogo').value;
+  let dadosSalvar = ""; // Aqui vai o Base64 ou o link
+  
   try {
     if (tipo === 'html_local') {
       const file = document.getElementById('arquivoHtmlJogo').files[0];
-      if (!file) throw new Error("Selecione o arquivo do jogo.");
-      const ehZip = /\.zip$/i.test(file.name) || file.type === 'application/zip';
-      novoJogo.fileType = ehZip ? 'zip' : 'html';
-      novoJogo.originalFileName = file.name;
-      if (firebasePronto) {
-        const up = await fazerUploadFirebase(file, `games/${usuarioAnonimo.uid}/${disciplina.id}/${novoId}`);
-        novoJogo.storagePath = up.caminho;
-        novoJogo.url = up.url;
-      } else {
-        novoJogo.url = URL.createObjectURL(file);
-        novoJogo._localObjectURL = true;
-      }
+      if (file) { dadosSalvar = await arquivoParaBase64(file); } 
     } else {
-      novoJogo.fileType = 'link';
-      novoJogo.originalFileName = '';
-      novoJogo.url = document.getElementById('linkJogo').value.trim();
+      dadosSalvar = document.getElementById('linkJogo').value;
     }
 
     const arquivoCapa = document.getElementById('capaJogo').files[0];
-    if (arquivoCapa) {
-      if (firebasePronto) {
-        const upCapa = await fazerUploadFirebase(arquivoCapa, `covers/${usuarioAnonimo.uid}/${novoId}`);
-        novoJogo.capa = upCapa.url;
-        novoJogo.capaStoragePath = upCapa.caminho;
-      } else {
-        novoJogo.capa = URL.createObjectURL(arquivoCapa);
-      }
-    } else if (disciplinaAtualId === 999) {
-      novoJogo.capa = "0.png";
-    }
+    let capaBase64 = "";
+    if (arquivoCapa) { capaBase64 = await arquivoParaBase64(arquivoCapa); } 
+    
+    // Enviando para o Firestore
+    await db.collection("jogos").add({
+      disciplinaId: disciplinaAtualId,
+      nome: nome,
+      tipo: tipo,
+      dados: dadosSalvar,
+      capa: capaBase64,
+      excluido: false,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
 
-    disciplina.jogos.push(novoJogo);
-    await persistirJogoFirebase(disciplina, novoJogo);
     fecharModalAdicionarJogo();
-    abrirDisciplina(disciplinaAtualId);
-    alert(firebasePronto ? "Jogo cadastrado e salvo no Firebase. O catálogo também foi enviado ao espelho GitHub." : "Jogo cadastrado nesta sessão. Configure o Firebase para salvar permanentemente.");
-  } catch (erro) {
-    console.error(erro);
-    alert("Não foi possível salvar o jogo: " + (erro.message || erro));
+    buscarJogosDoFirestore(disciplinaAtualId);
+    alert("Jogo cadastrado com sucesso no Firebase!");
+
+  } catch (error) {
+    console.error("Erro:", error);
+    alert("Erro ao salvar o jogo. Verifique a conexão.");
+  } finally {
+    btnSalvar.innerText = "💾 SALVAR JOGO NO FIREBASE";
+    btnSalvar.disabled = false;
   }
 }
 
-/* ===================== LIXEIRA ===================== */
-function renderizarLixeira() {
+// 7. LIXEIRA VINCULADA AO FIRESTORE
+function abrirLixeira() { 
+  document.getElementById('lixeiraModal').style.display = 'flex'; 
   const containerLixeira = document.getElementById('container-lixeira');
-  containerLixeira.innerHTML = '';
-  let jogosExcluidos = [];
-  disciplinas.forEach(d => d.jogos.forEach(j => { if (j.excluido) jogosExcluidos.push({ disciplinaId: d.id, disciplinaNome: d.nome, jogo: j }); }));
-  if (jogosExcluidos.length === 0) { containerLixeira.innerHTML = '<p style="text-align:center;width:100%;">A LIXEIRA ESTÁ VAZIA.</p>'; return; }
-  jogosExcluidos.forEach(item => {
-    const div = document.createElement('div');
-    div.style = "display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.1);padding:10px;border-radius:6px;margin-bottom:10px;";
-    div.innerHTML = `
-      <div><strong style="color:white;font-size:16px;">🎮 ${item.jogo.nome}</strong><br><span style="color:gray;font-size:12px;">CATEGORIA: ${item.disciplinaNome}</span></div>
-      <button class="btn btn-add" onclick="reativarJogo(${item.disciplinaId}, ${item.jogo.id})">REATIVAR</button>`;
-    containerLixeira.appendChild(div);
+  containerLixeira.innerHTML = '<p style="color:var(--gold);text-align:center;">Buscando jogos excluídos...</p>';
+
+  db.collection("jogos").where("excluido", "==", true).get().then(snapshot => {
+    containerLixeira.innerHTML = '';
+    if(snapshot.empty) {
+        containerLixeira.innerHTML = '<p style="text-align:center; color:white;">A LIXEIRA ESTÁ VAZIA.</p>';
+        return;
+    }
+    
+    snapshot.forEach(doc => {
+      let jogo = doc.data();
+      let disciplina = disciplinas.find(d => d.id === jogo.disciplinaId);
+      
+      const div = document.createElement('div');
+      div.style = "display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 6px; margin-bottom: 10px;";
+      div.innerHTML = `
+        <div>
+          <strong style="color: white; font-size: 16px;">🎮 ${jogo.nome}</strong><br>
+          <span style="color: gray; font-size: 12px;">CATEGORIA: ${disciplina ? disciplina.nome : 'Desconhecida'}</span>
+        </div>
+        <button class="btn btn-add" onclick="reativarJogo('${doc.id}')">REATIVAR</button>
+      `;
+      containerLixeira.appendChild(div);
+    });
   });
 }
 
-async function reativarJogo(disciplinaId, jogoId) {
-  const disciplina = disciplinas.find(d => d.id === disciplinaId);
-  const jogo = disciplina?.jogos.find(j => j.id === jogoId);
-  if (!jogo) return;
-  jogo.excluido = false;
-  try { await reativarJogoFirebase(disciplina, jogo); } catch(e) { console.error(e); }
-  renderizarLixeira();
-  if (disciplinaAtualId === disciplinaId && document.getElementById('tela-disciplina').style.display === 'block') renderizarJogos();
+function reativarJogo(firebaseId) {
+  db.collection("jogos").doc(firebaseId).update({ excluido: false }).then(() => {
+    abrirLixeira();
+    if(disciplinaAtualId) buscarJogosDoFirestore(disciplinaAtualId);
+  });
 }
-
-function abrirLixeira() { document.getElementById('lixeiraModal').style.display = 'flex'; }
 function fecharLixeira() { document.getElementById('lixeiraModal').style.display = 'none'; }
 
-/* Expostas para os onclick existentes na interface original */
-Object.assign(window, {
-  abrirDisciplina,
-  voltarTelaPrincipal,
-  abrirModalAdicionarJogo,
-  fecharModalAdicionarJogo,
-  alternarTipoEntradaJogo,
-  salvarNovoJogo,
-  alternarModoDeletar,
-  confirmarDelecaoJogo,
-  abrirLixeira,
-  fecharLixeira,
-  reativarJogo,
-  abrirJogoInterno,
-  fecharJogoInterno
-});
-
-window.addEventListener('load', async () => {
-  renderizarTelaPrincipal();
-  await iniciarFirebase();
-  renderizarTelaPrincipal();
-});
+// INICIA A APLICAÇÃO
+window.onload = renderizarTelaPrincipal;
 </script>
 </body>
 </html>
